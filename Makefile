@@ -6,75 +6,95 @@
 #    By: dagarmil <dagarmil@student.42barcelon      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/28 12:48:53 by dagarmil          #+#    #+#              #
-#    Updated: 2024/12/02 15:14:57 by dagarmil         ###   ########.fr        #
+#    Updated: 2024/12/03 22:13:27 by dagarmil         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fractol
+# Colors
+RESET 	 	= "\033[0m"
+BLACK 	 	= "\033[30m"    # Black
+RED   	 	= "\033[31m" 	 # Red
+GREEN    	= "\033[32m"    # Green
+YELLOW   	= "\033[33m"    # Yellow
+BLUE     	= "\033[34m"    # Blue
+MAGENTA  	= "\033[35m"    # Magenta
+CYAN     	= "\033[36m"    # Cyan
+WHITE    	= "\033[37m"    # White
 
-# Directorios
-LIBFT_DIR = lib/Libft
-MLX42_SRC = lib/MLX42
-MLX42_BUILD = lib/MLX42/build
-SRC_DIR = src
-OBJ_DIR = obj
-INCLUDE_DIR = include/
+# Compiler
+NAME 		= fractol
+CC   		= cc
+CFLAGS		= -Wall -Wextra -Werror
+FLAGSMLX42  = -ldl -lglfw -pthread -lm
+AR 			= ar rcs
+MAKE        = make -C
+MKDIR		= mkdir -p
+RM			= rm -rf
 
-# Bibliotecas
-LIBFT_LIB = $(LIBFT_DIR)/Libftnew.a
-MLX42_LIB = $(MLX42_BUILD)/libmlx42.a
-MLX42_H = lib/MLX42/include/MLX42/
-LIBFT_H = lib/Libft/includes/
-INCLUDE_H = $(INCLUDE_DIR)
+# Libs
+LIBFT_DIR 		= lib/Libft
+LIBFT_LIB 		= $(LIBFT_DIR)/Libftnew.a
+MLX42_LIB 		= $(MLX42_BUILD)/libmlx42.a
+MLX42_SRC 		= lib/MLX42
+MLX42_BUILD 	= lib/MLX42/build
 
-# Archivos fuente y objetos
-SRC = $(wildcard $(SRC_DIR)/*.c)
-OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+# includes
+INCLUDE_DIR 	= includes/
+MLX42_H 		= lib/MLX42/include/MLX42/
+LIBFT_H 		= lib/Libft/includes/
+INCLUDE_FLAG	= -I./$(INCLUDE_DIR) \
+				  -I./$(MLX42_H) \
+				  -I./$(LIBFT_H) \
 
-# Compilador y flags
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
-FLAGSMLX42 = -ldl -lglfw -pthread -lm
-AR = ar rcs
+# Sources
+SRCS_DIR 		= srcs/
+SRCS 			= $(wildcard $(SRCS_DIR)/*.c)
 
-# Reglas
-all: $(NAME)
+# Objects
+OBJS_DIR 		= objs/
+OBJS = $(SRC:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
 
-# Regla para compilar el programa final
-$(NAME): $(LIBFT_LIB) $(MLX42_LIB) $(OBJ)
-	$(CC) $(CFLAGS) -I./$(MLX42_H) -I./$(LIBFT_H) -I./$(INCLUDE_H) $(OBJ) $(LIBFT_LIB) $(MLX42_LIB) $(FLAGSMLX42) -o $(NAME)
 
-# Crear el directorio de objetos si no existe
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+# Rules
+all: $(LIBFT_LIB) $(MLX42_LIB) $(OBJS_DIR) $(NAME)
 
-# Regla para compilar los archivos .c en .o
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I./$(MLX42_H) -I./$(LIBFT_H) -I./$(INCLUDE_H) -c $< -o $@
+# Rule for Name
+$(NAME): $(LIBFT_LIB) $(MLX42_LIB) $(OBJS) Makefile
+	@echo $(GREEN) "Compiling $(NAME)..." $(RESET)
+	@$(CC) $(CFLAGS) $(INCLUDE_FLAG) $(OBJS) $(LIBFT_LIB) $(MLX42_LIB) $(FLAGSMLX42) -o $(NAME)
+	@echo $(YELLOW) "Compiling FINISHED" $(RESET)
 
-# Compilación de Libft
+# Objects directori
+$(OBJS_DIR):
+	mkdir -p $(OBJS_DIR)
+
+# Rule for compile .c in .o
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
+	$(CC) $(CFLAGS) $(INCLUDE_FLAG) -c $< -o $@
+
+# Compile Libft
 $(LIBFT_LIB):
-	@echo "Compiling Libft..."
-	make -C $(LIBFT_DIR)
-	@echo "Libft compiled"
+	@echo $(CYAN) "Compiling Libft..." $(RESET)
+	@$(MAKE) $(LIBFT_DIR)
+	@echo $(YELLOW) "Libft compiled" $(RESET)
 
 # Limpieza de objetos y el ejecutable
 clean:
-	@echo "Cleaning..."
-	rm -rf $(OBJ_DIR)
-	make -C $(LIBFT_DIR) clean
-	@echo "Cleaned"
+	@echo $(MAGENTA) "Cleaning..." $(RESET)
+	@$(RM) $(OBJ_DIR)
+	@make -C $(LIBFT_DIR) clean
+	@echo $(RED) "Cleaned" $(RESET)
 
 # Eliminar todo, incluyendo el ejecutable
 fclean: clean
-	@echo "Removing library..."
-	rm -f $(NAME)
-	rm -f $(LIBFT_LIB)
-	@echo "Removed library"
+	@echo $(MAGENTA) "Removing library..." $(RESET)
+	@$(RM) $(NAME)
+	@$(RM) $(LIBFT_LIB)
+	@echo $(RED) "Removed library" $(RESET)
 
 # Recompilar todo
 re: fclean all
-	@echo "Rebuilding everything..."
+	@echo $(BLUE) "Rebuilding everything..." $(RESET)
 
 .PHONY: all clean fclean re
 
