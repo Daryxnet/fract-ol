@@ -6,7 +6,7 @@
 /*   By: dagarmil <dagarmil@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 22:22:40 by dagarmil          #+#    #+#             */
-/*   Updated: 2024/12/03 22:23:26 by dagarmil         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:57:56 by dagarmil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdbool.h>
 # include "libft.h"
 # include "keys.h"
-# include "mlx.h"
+# include "MLX42.h"
 
 # define MANDELBROT 1
 # define JULIA 2
@@ -31,7 +31,7 @@
 # define MANDELBOX_STR "mandelbox"
 # define CELTIC_MANDELBAR_STR "celtic_mandelbar"
 
-# define WIN_SIZE 500
+# define WIN_SIZE 1000
 # define VIEW_CHANGE_SIZE 60
 # define MIN_ITERATIONS 256
 # define MAX_ITERATIONS 256
@@ -77,7 +77,7 @@ typedef struct s_fractal
 
 typedef struct s_engine
 {
-	void		*mlx;
+	mlx_t		*mlx;
 	void		*window;
 	t_image		image;
 	t_fractal	fractal;

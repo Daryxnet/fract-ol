@@ -6,13 +6,13 @@
 /*   By: dagarmil <dagarmil@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 22:30:10 by dagarmil          #+#    #+#             */
-/*   Updated: 2024/12/03 22:30:29 by dagarmil         ###   ########.fr       */
+/*   Updated: 2024/12/04 16:01:39 by dagarmil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "make_engine.h"
 #include "utils.h"
-#include "mlx.h"
+#include "MLX42.h"
 
 void	change_fractal(int key, t_engine *engine)
 {
@@ -79,18 +79,25 @@ void	init_engine(t_engine *engine, char *arg)
 	engine->mlx = mlx_init();
 	if (!engine->mlx)
 		error_message("[MLX ERROR]: can't do mlx_init!\n", 1);
+	
 	engine->window = mlx_new_window(engine->mlx, WIN_SIZE, WIN_SIZE, \
 												"Fractol project");
-	engine->image.img_ptr = mlx_new_image(engine->mlx, WIN_SIZE, WIN_SIZE);
-	if (!engine->window || !engine->image.img_ptr)
+	if (!engine->window)
 	{
-		mlx_destroy_image(engine->mlx, engine->image.img_ptr);
-		mlx_destroy_window(engine->mlx, engine->window);
+		mlx_terminate(engine->mlx);
 		error_message("[MLX ERROR]: can't handle object creation!\n", 1);
 	}
+
+	engine->image.img_ptr = mlx_new_image(engine->mlx, WIN_SIZE, WIN_SIZE);
+	if (!engine->image.img_ptr)
+	{
+		mlx_terminate(engine->mlx);
+		error_message("[MLX ERROR]: can't create image!\n", 1);
+	}
+
 	engine->image.addr_ptr = mlx_get_data_addr(engine->image.img_ptr, \
-								&pixel_bits, &line_len, &endian);
-	engine->image.pixel_bits = pixel_bits;
-	engine->image.line_len = line_len;
-	engine->image.endian = endian;
+			&pixel_bits, &line_len, &endian);
+    engine->image.pixel_bits = pixel_bits;
+    engine->image.line_len = line_len;
+    engine->image.endian = endian;
 }
