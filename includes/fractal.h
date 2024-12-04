@@ -6,7 +6,7 @@
 /*   By: dagarmil <dagarmil@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 22:22:40 by dagarmil          #+#    #+#             */
-/*   Updated: 2024/12/04 15:57:56 by dagarmil         ###   ########.fr       */
+/*   Updated: 2024/12/04 20:24:46 by dagarmil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <stdbool.h>
 # include "libft.h"
-# include "keys.h"
 # include "MLX42.h"
 
 # define MANDELBROT 1

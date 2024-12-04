@@ -6,17 +6,17 @@
 /*   By: dagarmil <dagarmil@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 16:09:20 by dagarmil          #+#    #+#             */
-/*   Updated: 2024/12/04 19:28:38 by dagarmil         ###   ########.fr       */
+/*   Updated: 2024/12/04 20:24:20 by dagarmil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MLX42.h"
-#include "fractol.h"
 #include "libft.h"
 #include <stdio.h>
 #include "events.h"
 #include "render.h"
 #include "make_engine.h"
+#include "fractal.h"
 
 int	on_destroy_event(void *param)
 {

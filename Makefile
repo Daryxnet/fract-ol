@@ -6,7 +6,7 @@
 #    By: dagarmil <dagarmil@student.42barcelon      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/28 12:48:53 by dagarmil          #+#    #+#              #
-#    Updated: 2024/12/03 22:13:27 by dagarmil         ###   ########.fr        #
+#    Updated: 2024/12/04 20:23:05 by dagarmil         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ SRCS 			= $(wildcard $(SRCS_DIR)/*.c)
 
 # Objects
 OBJS_DIR 		= objs/
-OBJS = $(SRC:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
+OBJS = $(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
 
 
 # Rules
@@ -81,7 +81,7 @@ $(LIBFT_LIB):
 # Limpieza de objetos y el ejecutable
 clean:
 	@echo $(MAGENTA) "Cleaning..." $(RESET)
-	@$(RM) $(OBJ_DIR)
+	@$(RM) $(OBJS_DIR)
 	@make -C $(LIBFT_DIR) clean
 	@echo $(RED) "Cleaned" $(RESET)
 
