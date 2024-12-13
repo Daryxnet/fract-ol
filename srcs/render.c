@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dagarmil <dagarmil@student.42barcelon      +#+  +:+       +#+        */
+/*   By: dapetros <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 18:34:05 by dagarmil          #+#    #+#             */
-/*   Updated: 2024/12/04 19:02:42 by dagarmil         ###   ########.fr       */
+/*   Created: 2024/03/11 22:23:11 by dapetros          #+#    #+#             */
+/*   Updated: 2024/03/11 22:55:14 by dapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,16 @@ void	change_view(int key, t_engine *engine)
 
 void	set_pixel_color(t_engine *engine, int x, int y, int color)
 {
-	mlx_put_pixel(&engine->image, x, y, color);
+	int	line_len;
+	int	pixel_bits;
+	int	offset;
+
+	if (x < 0 || x >= WIN_SIZE || y < 0 || y >= WIN_SIZE)
+		return ;
+	line_len = engine->image.line_len;
+	pixel_bits = engine->image.pixel_bits;
+	offset = (y * line_len) + ((pixel_bits / 8) * x);
+	*(unsigned int *)(engine->image.addr_ptr + offset) = color;
 }
 
 int	calc_fractal(t_fractal *fract, t_complex *c, int x, int y)
@@ -95,8 +104,6 @@ void	draw_fractal(t_engine *engine)
 	x = -1;
 	fract = &engine->fractal;
 	mlx_clear_window(engine->mlx, engine->window);
-
-	// Dibujamos el fractal píxel por píxel
 	while (++x < WIN_SIZE)
 	{
 		y = -1;
@@ -110,7 +117,6 @@ void	draw_fractal(t_engine *engine)
 			set_pixel_color(engine, x, y, (iter * engine->fractal.color));
 		}
 	}
-
-	mlx_image_to_window(engine->mlx, engine->window, \
-						engine->image.img_ptr, 0, 0);
+	mlx_put_image_to_window(engine->mlx, engine->window, \
+							engine->image.img_ptr, 0, 0);
 }

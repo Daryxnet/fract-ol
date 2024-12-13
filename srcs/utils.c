@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dagarmil <dagarmil@student.42barcelon      +#+  +:+       +#+        */
+/*   By: dapetros <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 14:47:58 by dagarmil          #+#    #+#             */
-/*   Updated: 2024/12/04 19:17:38 by dagarmil         ###   ########.fr       */
+/*   Created: 2024/03/11 22:25:29 by dapetros          #+#    #+#             */
+/*   Updated: 2024/03/11 22:56:07 by dapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "utils.h"
 
 void	error_message(char *text, int mode)
 {
@@ -43,7 +41,6 @@ void	print(char *str, int fd)
 	ft_putstr_fd(str, fd);
 }
 
-
 void	show_help(void)
 {
 	print("\n", 1);
@@ -69,4 +66,3 @@ void	show_help(void)
 	print("\n", 1);
 	exit(EXIT_SUCCESS);
 }
-

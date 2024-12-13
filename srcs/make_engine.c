@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   make_engine.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dagarmil <dagarmil@student.42barcelon      +#+  +:+       +#+        */
+/*   By: dapetros <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/03 22:30:10 by dagarmil          #+#    #+#             */
-/*   Updated: 2024/12/04 16:01:39 by dagarmil         ###   ########.fr       */
+/*   Created: 2024/03/11 22:19:09 by dapetros          #+#    #+#             */
+/*   Updated: 2024/03/11 22:54:32 by dapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "make_engine.h"
 #include "utils.h"
-#include "MLX42.h"
+#include "mlx.h"
 
 void	change_fractal(int key, t_engine *engine)
 {
@@ -79,25 +79,18 @@ void	init_engine(t_engine *engine, char *arg)
 	engine->mlx = mlx_init();
 	if (!engine->mlx)
 		error_message("[MLX ERROR]: can't do mlx_init!\n", 1);
-	
 	engine->window = mlx_new_window(engine->mlx, WIN_SIZE, WIN_SIZE, \
 												"Fractol project");
-	if (!engine->window)
+	engine->image.img_ptr = mlx_new_image(engine->mlx, WIN_SIZE, WIN_SIZE);
+	if (!engine->window || !engine->image.img_ptr)
 	{
-		mlx_terminate(engine->mlx);
+		mlx_destroy_image(engine->mlx, engine->image.img_ptr);
+		mlx_destroy_window(engine->mlx, engine->window);
 		error_message("[MLX ERROR]: can't handle object creation!\n", 1);
 	}
-
-	engine->image.img_ptr = mlx_new_image(engine->mlx, WIN_SIZE, WIN_SIZE);
-	if (!engine->image.img_ptr)
-	{
-		mlx_terminate(engine->mlx);
-		error_message("[MLX ERROR]: can't create image!\n", 1);
-	}
-
 	engine->image.addr_ptr = mlx_get_data_addr(engine->image.img_ptr, \
-			&pixel_bits, &line_len, &endian);
-    engine->image.pixel_bits = pixel_bits;
-    engine->image.line_len = line_len;
-    engine->image.endian = endian;
+								&pixel_bits, &line_len, &endian);
+	engine->image.pixel_bits = pixel_bits;
+	engine->image.line_len = line_len;
+	engine->image.endian = endian;
 }
