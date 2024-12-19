@@ -6,7 +6,7 @@
 /*   By: dagarmil <dagarmil@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 18:25:55 by dagarmil          #+#    #+#             */
-/*   Updated: 2024/12/13 18:26:00 by dagarmil         ###   ########.fr       */
+/*   Updated: 2024/12/19 13:24:21 by dagarmil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	on_key_hook_event(int key, t_engine *engine)
 {
 	if ((key >= KEY_Q && key <= KEY_Y) || (key >= KEY_A && key <= KEY_H))
 		change_color(key, engine);
-	else if (key >= KEY_LEFT && key <= KEY_UP)
+	else if (key >= KEY_LEFT && key <= KEY_DOWN)
 		change_view(key, engine);
 	else if (key >= KEY_ONE && key <= KEY_FIVE)
 		change_fractal(key, engine);
